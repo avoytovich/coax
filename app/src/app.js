@@ -1,14 +1,16 @@
-import '../styles/image_viewer.css';
-import sum from './sum.js';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import reducer from './ChooseOne/ChooseOneReducer';
+import { App } from './App/App';
 
-console.log(sum(5, 315));
-const button = document.createElement('button');
-button.innerText = 'Click me';
-button.onclick = () => {
-  System.import('./image_viewer.js')
-    .then(module => {
-      module.default();
-    });
-};
+const store = createStore(reducer, applyMiddleware(thunk));
 
-document.body.appendChild(button);
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
